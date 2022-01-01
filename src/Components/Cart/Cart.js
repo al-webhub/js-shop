@@ -5,7 +5,12 @@ import EmptyCart from "./EmptyCart";
 import FilledCart from "./FilledCart";
 import CartLoading from "./CartLoading";
 
-const Cart = ({ cart }) => {
+const Cart = ({
+  cart,
+  emptyCartHandler,
+  updateCartQuantityHandler,
+  removeFromCartHandler,
+}) => {
   const classes = useStyles();
 
   let cartContent = <CartLoading />;
@@ -13,7 +18,14 @@ const Cart = ({ cart }) => {
     if (!cart.line_items.length) {
       cartContent = <EmptyCart />;
     } else {
-      cartContent = <FilledCart cart={cart} />;
+      cartContent = (
+        <FilledCart
+          cart={cart}
+          emptyCartHandler={emptyCartHandler}
+          updateCartQuantityHandler={updateCartQuantityHandler}
+          removeFromCartHandler={removeFromCartHandler}
+        />
+      );
     }
   }
 

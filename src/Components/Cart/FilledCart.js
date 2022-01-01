@@ -3,14 +3,23 @@ import { Grid, Typography, Button } from "@material-ui/core";
 import useStyles from "./CartStyles";
 import CartItem from "./CartItem/CartItem";
 
-const FilledCart = ({ cart }) => {
+const FilledCart = ({
+  cart,
+  emptyCartHandler,
+  updateCartQuantityHandler,
+  removeFromCartHandler,
+}) => {
   const classes = useStyles();
   return (
     <>
       <Grid container spacing={3}>
         {cart.line_items.map((product) => (
           <Grid item xs={12} sm={4} key={product.id}>
-            <CartItem product={product} />
+            <CartItem
+              product={product}
+              onUpdateCartQuantity={updateCartQuantityHandler}
+              onRemoveFromCart={removeFromCartHandler}
+            />
           </Grid>
         ))}
       </Grid>
@@ -25,6 +34,7 @@ const FilledCart = ({ cart }) => {
             variant="contained"
             color="secondary"
             type="button"
+            onClick={emptyCartHandler}
           >
             Clear cart
           </Button>
