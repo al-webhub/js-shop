@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Products, Navbar, Cart } from "./Components";
+import { Products, Navbar, Cart, Checkout } from "./Components";
 import { commerce } from "./Components/lib/commerce";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -55,10 +55,12 @@ const App = () => {
       link: "/cart",
     },
     products: {
-      component: (
-        <Products onAddToCart={addToCartHandler} products={products} />
-      ),
+      component: <Products onAddToCart={addToCartHandler} products={products} />,
       link: "/",
+    },
+    checkout: {
+      component: <Checkout cart={cart} />,
+      link: "/checkout",
     },
   };
 
@@ -67,16 +69,9 @@ const App = () => {
       <div>
         <Navbar totalItems={cart.total_items}></Navbar>
         <Routes>
-          <Route
-            exact
-            path={pages.products.link}
-            element={pages.products.component}
-          ></Route>
-          <Route
-            exact
-            path={pages.cart.link}
-            element={pages.cart.component}
-          ></Route>
+          <Route exact path={pages.products.link} element={pages.products.component}></Route>
+          <Route exact path={pages.cart.link} element={pages.cart.component}></Route>
+          <Route exact path={pages.checkout.link} element={pages.checkout.component}></Route>
         </Routes>
       </div>
     </Router>
