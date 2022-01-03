@@ -72,11 +72,11 @@ const AdressForm = ({ checkoutToken, next }) => {
       </Typography>
       <FormProvider {...methods}>
         <form
-          onSubmit={methods.handleSubmit((data) => next({ ...data, shippingCountry, setShippingArea, shippingOption }))}
+          onSubmit={methods.handleSubmit((data) => next({ ...data, shippingCountry, shippingArea, shippingOption }))}
         >
           <Grid container spacing={3}>
-            <FormInput required name="firstName" label="First Name" />
-            <FormInput required name="lastName" label="Last Name" />
+            <FormInput required name="firstname" label="First Name" />
+            <FormInput required name="lastname" label="Last Name" />
             <FormInput required name="adress1" label="Adress" />
             <FormInput required name="email" label="Email" />
             <FormInput required name="city" label="City" />
@@ -112,11 +112,13 @@ const AdressForm = ({ checkoutToken, next }) => {
               </Select>
             </Grid>
           </Grid>
-          <Grid direction="row" justifyContent="space-evenly" alignItems="flex-end" container spacing={5}>
-            <Grid item xs={12} sm={6}>
-              <Button component={Link} to="/cart" variant="outline">
+          <Grid direction="row" container spacing={5}>
+            <Grid item xs={12} sm={6} container justifyContent="flex-start" alignItems="flex-end">
+              <Button component={Link} to="/cart" variant="outlined">
                 Back to cart
               </Button>
+            </Grid>
+            <Grid item xs={12} sm={6} container justifyContent="flex-end" alignItems="flex-start">
               <Button type="submit" variant="contained" color="primary">
                 Next
               </Button>

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { Paper, Stepper, Step, StepLabel, Typography, CssBaseline } from "@material-ui/core";
+import { commerce } from "../lib/commerce";
 import useStyles from "./CheckoutStyles";
-import { Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button } from "@material-ui/core";
 import AdressForm from "./AdressForm";
 import PaymentForm from "./PaymentForm";
 import Confirmation from "./Confirmation";
-import { commerce } from "../lib/commerce";
 
 const steps = ["Shipping adress", "Payment details"];
 
-const Checkout = ({ cart }) => {
+const Checkout = ({ cart, order, error, onCaptureCheckout }) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState(null);
@@ -21,7 +21,9 @@ const Checkout = ({ cart }) => {
           type: "cart",
         });
         setCheckoutToken(token);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     generateToken();
@@ -39,11 +41,18 @@ const Checkout = ({ cart }) => {
     activeStep === 0 ? (
       <AdressForm checkoutToken={checkoutToken} next={next} />
     ) : (
-      <PaymentForm shippingData={shippingData} />
+      <PaymentForm
+        shippingData={shippingData}
+        checkoutToken={checkoutToken}
+        prevStep={prevStep}
+        nextStep={nextStep}
+        onCaptureCheckout={onCaptureCheckout}
+      />
     );
 
   return (
     <>
+      <CssBaseline />
       <div className={classes.navbar}></div>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
@@ -57,7 +66,7 @@ const Checkout = ({ cart }) => {
               </Step>
             ))}
           </Stepper>
-          {activeStep === steps.length ? <Confirmation /> : checkoutToken && <Form />}
+          {activeStep === steps.length ? <Confirmation order={order} error={error} /> : checkoutToken && <Form />}
         </Paper>
       </main>
     </>
