@@ -8,4 +8,4 @@ Hosted on [![Netlify Status](https://api.netlify.com/api/v1/badges/d42a2774-225a
 
 ## Demo
 
-https://react-commercejs.ml/
+https://demo-commercejs.netlify.app/
